@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+const BASE_URL = "http://176.123.166.115:8000";
+
 const App = () => {
   const [ogrn, setOgrn] = useState("");
   const [appNumber, setAppNumber] = useState("");
@@ -17,7 +19,7 @@ const App = () => {
   const fetchRequests = async () => {
     try {
       const userId = tg.initDataUnsafe?.user?.id;
-      const res = await fetch(`176.123.166.115:8000/api/requests?userId=${userId}`);
+      const res = await fetch(`${BASE_URL}/api/requests?userId=${userId}`);
       const data = await res.json();
       setRequests(data);
     } catch (e) {
@@ -31,8 +33,8 @@ const App = () => {
     const payload = { ogrn, appNumber, userId };
 
     const url = editId
-      ? `176.123.166.115:8000/api/requests/${editId}`
-      : "176.123.166.115:8000/api/requests";
+      ? `${BASE_URL}/api/requests/${editId}`
+      : `${BASE_URL}/api/requests`;
 
     const method = editId ? "PUT" : "POST";
 
@@ -54,44 +56,47 @@ const App = () => {
     setEditId(req.id);
     setOgrn(req.ogrn);
     setAppNumber(req.appNumber);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("Удалить заявку?")) return;
-    await fetch(`176.123.166.115:8000/api/requests/${id}`, { method: "DELETE" });
+    await fetch(`${BASE_URL}/api/requests/${id}`, { method: "DELETE" });
     fetchRequests();
   };
 
   return (
     <div className="container mt-4">
-      <h2>Заявка</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">ОГРН</label>
-          <input
-            type="text"
-            className="form-control"
-            value={ogrn}
-            onChange={(e) => setOgrn(e.target.value)}
-            required
-          />
+      <h2 className="mb-3">Создание заявки</h2>
+      <div className="card mb-4">
+        <div className="card-body">
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label className="form-label">ОГРН</label>
+              <input
+                type="text"
+                className="form-control"
+                value={ogrn}
+                onChange={(e) => setOgrn(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Номер заявки</label>
+              <input
+                type="text"
+                className="form-control"
+                value={appNumber}
+                onChange={(e) => setAppNumber(e.target.value)}
+                required
+              />
+            </div>
+            <button className="btn btn-primary" type="submit">
+              {editId ? "Сохранить изменения" : "Создать заявку"}
+            </button>
+          </form>
         </div>
-        <div className="mb-3">
-          <label className="form-label">Номер заявки</label>
-          <input
-            type="text"
-            className="form-control"
-            value={appNumber}
-            onChange={(e) => setAppNumber(e.target.value)}
-            required
-          />
-        </div>
-        <button className="btn btn-primary" type="submit">
-          {editId ? "Сохранить изменения" : "Создать заявку"}
-        </button>
-      </form>
-
-      <hr />
+      </div>
 
       <h3>Ваши заявки</h3>
       <ul className="list-group">
