@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const BASE_URL = "http://176.123.166.115:8000";
+const BASE_URL = "https://176-123-166-115.nip.io";
 
 const App = () => {
   const [ogrn, setOgrn] = useState("");
