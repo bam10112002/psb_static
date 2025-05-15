@@ -53,7 +53,7 @@ const App = () => {
     e.preventDefault();
     setError(null);
 
-    const userId = tg?.initDataUnsafe?.user?.id;
+    const userId = 1
     if (!userId) {
       setError("UserId не найден, повторите попытку позже");
       return;
