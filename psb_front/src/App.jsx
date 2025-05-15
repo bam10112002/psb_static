@@ -17,7 +17,7 @@ const App = () => {
   const fetchRequests = async () => {
     try {
       const userId = tg.initDataUnsafe?.user?.id;
-      const res = await fetch(`/api/requests?userId=${userId}`);
+      const res = await fetch(`176.123.166.115:8000/api/requests?userId=${userId}`);
       const data = await res.json();
       setRequests(data);
     } catch (e) {
@@ -31,8 +31,8 @@ const App = () => {
     const payload = { ogrn, appNumber, userId };
 
     const url = editId
-      ? `/api/requests/${editId}`
-      : "/api/requests";
+      ? `176.123.166.115:8000/api/requests/${editId}`
+      : "176.123.166.115:8000/api/requests";
 
     const method = editId ? "PUT" : "POST";
 
@@ -58,7 +58,7 @@ const App = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Удалить заявку?")) return;
-    await fetch(`/api/requests/${id}`, { method: "DELETE" });
+    await fetch(`176.123.166.115:8000/api/requests/${id}`, { method: "DELETE" });
     fetchRequests();
   };
 
