@@ -19,12 +19,23 @@ const App = () => {
 
   const fetchRequests = async () => {
     try {
-      const userId = tg?.initDataUnsafe?.user?.id;
-      if (!userId) {
-        setError("Не удалось получить userId из Telegram");
+      if (!tg) {
+        setError("Telegram WebApp не найден");
         return;
       }
-
+      
+      // Ждём готовности и получаем userId
+      tg.ready();
+  
+      const user = tg.initDataUnsafe?.user;
+      if (!user) {
+        setError("Пользовательские данные не найдены в Telegram");
+        return;
+      }
+  
+      const userId = user.id;
+      console.log("User ID:", userId);
+  
       const res = await fetch(`${BASE_URL}?userId=${userId}`);
       if (!res.ok) {
         throw new Error(`Ошибка при загрузке заявок: ${res.status}`);
