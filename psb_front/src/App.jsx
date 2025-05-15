@@ -27,7 +27,7 @@ const App = () => {
       // Ждём готовности и получаем userId
       tg.ready();
   
-      const user = tg.initDataUnsafe?.user;
+      const user = 1;
       if (!user) {
         setError("Пользовательские данные не найдены в Telegram");
         return;
