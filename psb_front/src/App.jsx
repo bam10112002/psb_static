@@ -33,7 +33,7 @@ const App = () => {
         return;
       }
   
-      const userId = user.id;
+      const userId = 1;
       console.log("User ID:", userId);
   
       const res = await fetch(`${BASE_URL}?userId=${userId}`);
