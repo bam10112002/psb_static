@@ -41,10 +41,6 @@ const App = () => {
     };
 
     const [user, setUser] = useState(null);
-    useEffect(() => {
-        fetchRequests()
-    }, [user]);
-
 
     useEffect(() => {
         const tg = window.Telegram.WebApp;
@@ -66,9 +62,6 @@ const App = () => {
 
     const fetchRequests = async () => {
         try {
-            if (!user)
-                return;
-
             const user = user.id;
             if (!user) {
                 setError("Пользовательские данные не найдены в Telegram");
