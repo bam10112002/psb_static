@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Form} from "react-bootstrap";
 
-const BASE_URL = "https://176-123-166-115.nip.io/api";
+const BASE_URL = "https://176.123.166.115:8000/api";
 
 const App = () => {
 
