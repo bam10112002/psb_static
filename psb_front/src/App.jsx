@@ -137,7 +137,7 @@ const App = () => {
         try {
             const res = await fetch(url, {
                 method,
-                headers: {"Content-Type": "application/json", "Access-Control-Allow-Origin": "https://psb-static.vercel.app"},
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(payload),
             });
 
