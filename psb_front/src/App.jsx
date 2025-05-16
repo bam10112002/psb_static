@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Form} from "react-bootstrap";
 
-const BASE_URL = "https://176-123-166-115.nip.io/api/requests";
+const BASE_URL = "https://176-123-166-115.nip.io/api";
 
 const App = () => {
 
@@ -11,7 +11,6 @@ const App = () => {
     const [numberOfAccounts, setNumberOfAccounts] = useState("");
     const [Inn, setInn] = useState("");
     const [email, setEmail] = useState("");
-    const [contractId, setContracId] = useState("");
 
 
     // company_name
@@ -34,13 +33,13 @@ const App = () => {
 
 
     const options = [
-        {value: "option1", label: "Организация в собственности РФ (балансовый счет 40506)"},
+        {value: "1", label: "Организация в собственности РФ (балансовый счет 40506)"},
         {
-            value: "option2",
+            value: "2",
             label: "Организация в собственности субъекта РФ (респ., края, области, города ... ) (балансовый счет 40606)"
         },
-        {value: "option3", label: "Негосударственные организации (балансовый счет 40706)"},
-        {value: "option4", label: "Индивидуальный предприниматель - исполнитель (балансовый счет 40825)"},
+        {value: "3", label: "Негосударственные организации (балансовый счет 40706)"},
+        {value: "4", label: "Индивидуальный предприниматель - исполнитель (балансовый счет 40825)"},
     ];
 
     const [selectedOption, setSelectedOption] = useState(options[0].value);
@@ -51,19 +50,19 @@ const App = () => {
 
 
     useEffect(() => {
-        // tg?.ready();
-        // fetchRequests();
+        tg?.ready();
+        fetchRequests();
     }, []);
 
     const fetchRequests = async () => {
         try {
-            if (!tg) {
-                setError("Telegram WebApp не найден");
-                return;
-            }
-
-            // Ждём готовности и получаем userId
-            tg.ready();
+            // if (!tg) {
+            //     setError("Telegram WebApp не найден");
+            //     return;
+            // }
+            //
+            // // Ждём готовности и получаем userId
+            // tg.ready();
 
             const user = 1;
             if (!user) {
@@ -79,6 +78,7 @@ const App = () => {
                 throw new Error(`Ошибка при загрузке заявок: ${res.status}`);
             }
             const data = await res.json();
+            console.log(data);
             setRequests(data);
             setError(null);
         } catch (e) {
@@ -102,19 +102,33 @@ const App = () => {
         if (editId) {
             // PUT можно отправлять частично, только поля которые заполнены
             payload = {};
-            if (ogrn.trim()) payload.ogrn = ogrn.trim();
-            if (appNumber.trim()) payload.appNumber = appNumber.trim();
+            if (companyName.trim()) payload.company_name = companyName.trim();
+            if (numberOfAccounts.trim()) payload.number_of_accounts = parseInt(numberOfAccounts.trim());
+            if (Inn.trim()) payload.inn = Inn.trim();
+            if (email.trim()) payload.email = email.trim();
+            payload.organizational_form = parseInt(selectedOption);
+
+            payload.user_id = userId;
+            payload.phone_number = "880800808080";
+            payload.fullname = "full";
+
             if (Object.keys(payload).length === 0) {
                 setError("Введите хотя бы одно поле для обновления");
                 return;
             }
         } else {
             // POST — все обязательные поля
-            if (!ogrn.trim() || !appNumber.trim()) {
-                setError("ОГРН и Номер заявки обязательны");
-                return;
-            }
-            payload = {ogrn: ogrn.trim(), appNumber: appNumber.trim(), userId};
+            payload = {
+                ...(companyName.trim() && { company_name: companyName.trim() }),
+                ...(numberOfAccounts.trim() && { number_of_accounts: parseInt(numberOfAccounts.trim()) }),
+                ...(Inn.trim() && { inn: Inn.trim() }),
+                ...(email.trim() && { email: email.trim() }),
+                organizational_form: parseInt(selectedOption),
+                user_id: userId,
+                phone_number: "880800808080",
+                fullname: "full",
+            };
+
         }
 
         const url = editId ? `${BASE_URL}/${editId}` : BASE_URL;
@@ -134,7 +148,7 @@ const App = () => {
 
             const result = await res.json();
 
-            setOgrn("");
+            // setOgrn("");
             setAppNumber("");
             setEditId(null);
             fetchRequests();
@@ -165,12 +179,23 @@ const App = () => {
             setError("Ошибка удаления заявки");
         }
     };
+    const [active, setActive] = useState("left");
 
     return (
 
         <div className="container-sm">
-            <h1 className="mb-1 fs-bold ">{editId ? "Редактирование заявки" : "Создание заявки"}</h1>
+
+
+            <h1 className="mb-1 fs-bold ">
+                {active == "left" ?
+                editId ? "Редактирование заявки" : "Создание заявки"
+                :"Мои заявки"
+                }</h1>
+
+            {/*{active == "left" &&*/}
+
             <div className="card mb-0">
+                {active=="left" &&
                 <div className="card-body">
                     <form onSubmit={handleSubmit}>
                       {error && (
@@ -191,7 +216,7 @@ const App = () => {
                                         value={option.value}
                                         checked={selectedOption === option.value}
                                         onChange={handleChange}
-                                        className="mb-3"
+                                        className="mb-3 "
                                     />
                                 ))}
                             </div>
@@ -236,9 +261,12 @@ const App = () => {
 
 
                       <div className="text-center mt-4">
-                        <button className="btn btn-primary" type="submit">
+                        <button className="btn btn-primary me-4" type="submit">
                           {editId ? "Сохранить изменения" : "Создать заявку"}
                         </button>
+                          <button className="btn btn-primary ms-2" onClick={() => setActive("right")}>
+                              Мои заявки
+                          </button>
                       </div>
 
 
@@ -258,6 +286,12 @@ const App = () => {
                         )}
                     </form>
                 </div>
+                }
+                {active=="right" &&
+                <div className="card-body">
+
+                </div>
+                }
             </div>
 
             {/*<h3>Ваши заявки</h3>*/}
