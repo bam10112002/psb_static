@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Form} from "react-bootstrap";
 
-const BASE_URL = "https://176-123-166-115.nip.io:444/";
+const BASE_URL = "https://176-123-166-115.nip.io:444";
 
 const App = () => {
 
@@ -48,21 +48,45 @@ const App = () => {
         setSelectedOption(e.target.value);
     };
 
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
+        const tg = window.Telegram.WebApp;
+
+        if (tg?.initDataUnsafe?.user) {
+            setUser(tg.initDataUnsafe.user);
+        } else {
+            // Telegram WebApp не инициализирован
+            console.warn('Telegram WebApp is not initialized or user not found.');
+        }
         tg?.ready();
         fetchRequests();
     }, []);
 
+
     const fetchRequests = async () => {
         try {
+
+
+
+
+            // return (
+            //     <div className="App">
+            //         <h1>Привет, {user.first_name}!</h1>
+            //         {user.last_name && <p>Фамилия: {user.last_name}</p>}
+            //         <p>Юзернейм: @{user.username}</p>
+            //         <p>Telegram ID: {user.id}</p>
+            //         <img src={user.photo_url} alt="avatar" width="100" style={{ borderRadius: '50%' }} />
+            //     </div>
+            // );
+
             // if (!tg) {
             //     setError("Telegram WebApp не найден");
             //     return;
             // }
-            //
-            // // Ждём готовности и получаем userId
-            // tg.ready();
+
+            // Ждём готовности и получаем userId
+            tg.ready();
 
             const user = 1;
             if (!user) {
@@ -73,7 +97,7 @@ const App = () => {
             const userId = 1;
             console.log("User ID:", userId);
 
-            const res = await fetch(`${BASE_URL}?userId=${userId}`);
+            const res = await fetch(`${BASE_URL}/${user.id}`);
             if (!res.ok) {
                 throw new Error(`Ошибка при загрузке заявок: ${res.status}`);
             }
@@ -249,7 +273,7 @@ const App = () => {
                                 required={!editId}
                             />
 
-                            <label className="form-label mt-2 mb-1">e-mail</label>
+                            <label className="form-label mt-2 mb-1">Email</label>
                             <input
                                 type="text"
                                 className="form-control"
