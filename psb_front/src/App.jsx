@@ -54,9 +54,9 @@ const App = () => {
         tg?.ready(); // Сообщить Telegram, что WebApp готов
     }, []);
 
-    if (!user) {
-        return <div>Загрузка данных Telegram...</div>;
-    }
+    // if (!user) {
+    //     return <div>Загрузка данных Telegram...</div>;
+    // }
 
     // const fetchRequests = async () => {
     //     try {
