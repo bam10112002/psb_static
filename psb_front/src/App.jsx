@@ -52,6 +52,7 @@ const App = () => {
         }
 
         tg?.ready(); // Сообщить Telegram, что WebApp готов
+        fetchRequests()
     }, []);
 
     if (!user) {
@@ -60,13 +61,13 @@ const App = () => {
 
     const fetchRequests = async () => {
         try {
-            const user = 1;
+            const user = user.id;
             if (!user) {
                 setError("Пользовательские данные не найдены в Telegram");
                 return;
             }
 
-            const userId = 1;
+            const userId = user.id;
             console.log("User ID:", userId);
 
             const res = await fetch(`${BASE_URL}/${user.id}`);
