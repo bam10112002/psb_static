@@ -63,6 +63,9 @@ const App = () => {
         fetchRequests();
     }, []);
 
+    if (!user) {
+        return <div>Загрузка данных Telegram...</div>;
+    }
 
     const fetchRequests = async () => {
         try {
