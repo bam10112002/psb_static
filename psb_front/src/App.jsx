@@ -60,7 +60,7 @@ const App = () => {
             console.warn('Telegram WebApp is not initialized or user not found.');
         }
         tg?.ready();
-        fetchRequests();
+        // fetchRequests();
     }, []);
 
     if (!user) {
@@ -219,7 +219,7 @@ const App = () => {
                 :"Мои заявки"
                 }</h1>
 
-            {user}
+            {/*{user}*/}
             {/*{user.id}*/}
             {/*{active == "left" &&*/}
 
