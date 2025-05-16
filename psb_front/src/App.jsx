@@ -216,6 +216,8 @@ const App = () => {
                 :"Мои заявки"
                 }</h1>
 
+            {user}
+            {user.id}
             {/*{active == "left" &&*/}
 
             <div className="card mb-0">
