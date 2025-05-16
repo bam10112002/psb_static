@@ -386,7 +386,7 @@ function App() {
             {user.last_name && <p>Фамилия: {user.last_name}</p>}
             <p>Юзернейм: @{user.username}</p>
             <p>Telegram ID: {user.id}</p>
-            <img src={user.photo_url} alt="avatar" width="100" style={{ borderRadius: '50%' }} />
+            {/*<img src={user.photo_url} alt="avatar" width="100" style={{ borderRadius: '50%' }} />*/}
         </div>
     );
 }
