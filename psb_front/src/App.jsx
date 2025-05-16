@@ -29,7 +29,6 @@ const App = () => {
     const [editId, setEditId] = useState(null);
     const [error, setError] = useState(null);
 
-    const tg = window.Telegram?.WebApp;
 
 
     const options = [
@@ -48,7 +47,7 @@ const App = () => {
         setSelectedOption(e.target.value);
     };
 
-
+    const [user, setUser] = useState(null);
     useEffect(() => {
         const tg = window.Telegram.WebApp;
 
@@ -285,7 +284,7 @@ const App = () => {
                                 className="btn btn-secondary ms-2"
                                 onClick={() => {
                                     setEditId(null);
-                                    setOgrn("");
+                                    // setOgrn("");
                                     setAppNumber("");
                                     setError(null);
                                 }}
