@@ -381,7 +381,7 @@ function App() {
     }
 
     return (
-        <div className="App">
+        <div >
             <h1>Привет, {user.first_name}!</h1>
             {user.last_name && <p>Фамилия: {user.last_name}</p>}
             <p>Юзернейм: @{user.username}</p>
