@@ -54,6 +54,11 @@ const App = () => {
         tg?.ready(); // Сообщить Telegram, что WebApp готов
         // fetchRequests()
     }, []);
+
+    if (!user) {
+        return <div>Загрузка данных Telegram...</div>;
+    }
+
     const fetchRequests = async () => {
         try {
             const user = user.id;
@@ -78,14 +83,6 @@ const App = () => {
             setError("Ошибка загрузки заявок");
         }
     };
-    if (!user) {
-        return <div>Загрузка данных Telegram...</div>;
-    }
-    else {
-        fetchRequests()
-    }
-
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
