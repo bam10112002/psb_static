@@ -169,7 +169,7 @@ const App = () => {
     return (
 
         <div className="container-sm">
-            <h1 className="mb-1">{editId ? "Редактирование заявки" : "Создание заявки"}</h1>
+            <h1 className="mb-1 fs-bold ">{editId ? "Редактирование заявки" : "Создание заявки"}</h1>
             <div className="card mb-0">
                 <div className="card-body">
                     <form onSubmit={handleSubmit}>
