@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Form} from "react-bootstrap";
 
-const BASE_URL = "https://176-123-166-115.nip.io:444/api";
+const BASE_URL = "https://176-123-166-115.nip.io:444/";
 
 const App = () => {
 
@@ -130,7 +130,7 @@ const App = () => {
             };
 
         }
-
+        console.log(payload)
         const url = editId ? `${BASE_URL}/${editId}` : BASE_URL;
         const method = editId ? "PUT" : "POST";
 
