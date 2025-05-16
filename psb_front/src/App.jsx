@@ -11,23 +11,11 @@ const App = () => {
     const [numberOfAccounts, setNumberOfAccounts] = useState("");
     const [Inn, setInn] = useState("");
     const [email, setEmail] = useState("");
-
-
-    // company_name
-    // number of accounts
-    // Inn
-    // email
-    // fullname
-    // phone_number
-    // contract_id
-    //
-    // user_id
-
-
     const [appNumber, setAppNumber] = useState("");
     const [requests, setRequests] = useState([{'ogrn': '13434534'}]);
     const [editId, setEditId] = useState(null);
     const [error, setError] = useState(null);
+    const [active, setActive] = useState("left");
 
 
 
@@ -61,9 +49,6 @@ const App = () => {
         tg?.ready(); // Сообщить Telegram, что WebApp готов
     }, []);
 
-    if (!user) {
-        return <div>Загрузка данных Telegram...</div>;
-    }
 
     const fetchRequests = async () => {
         try {
@@ -182,157 +167,162 @@ const App = () => {
             setError("Ошибка удаления заявки");
         }
     };
-    const [active, setActive] = useState("left");
 
     return (
-
-        <div className="container-sm">
-
+        <div className="App">
             <h1>Привет, {user.first_name}!</h1>
             {user.last_name && <p>Фамилия: {user.last_name}</p>}
             <p>Юзернейм: @{user.username}</p>
             <p>Telegram ID: {user.id}</p>
-            <h1 className="mb-1 fs-bold ">
-                {active == "left" ?
-                editId ? "Редактирование заявки" : "Создание заявки"
-                :"Мои заявки"
-                }</h1>
-
-            {/*{user}*/}
-            {/*{user.id}*/}
-            {/*{active == "left" &&*/}
-
-            <div className="card mb-0">
-                {active=="left" &&
-                <div className="card-body">
-                    <form onSubmit={handleSubmit}>
-                      {error && (
-                          <div className="alert alert-danger" role="alert">
-                            {error}
-                          </div>
-                      )}
-
-                        <div className="mb-0">
-                            <div className="">
-                                {options.map((option, index) => (
-                                    <Form.Check
-                                        key={option.value}
-                                        type="radio"
-                                        id={`radio-${index}`}
-                                        label={option.label}
-                                        name="radioGroup"
-                                        value={option.value}
-                                        checked={selectedOption === option.value}
-                                        onChange={handleChange}
-                                        className="mb-3 "
-                                    />
-                                ))}
-                            </div>
-
-
-                            <label className="form-label mt-2 mb-1">Название компании</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={companyName}
-                                onChange={(e) => setCompanyName(e.target.value)}
-                                required={!editId}
-                            />
-
-                            <label className="form-label mt-2 mb-1">Количество счетов</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={numberOfAccounts}
-                                onChange={(e) => setNumberOfAccounts(e.target.value)}
-                                required={!editId}
-                            />
-
-                            <label className="form-label mt-2 mb-1">ИНН</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={Inn}
-                                onChange={(e) => setInn(e.target.value)}
-                                required={!editId}
-                            />
-
-                            <label className="form-label mt-2 mb-1">Email</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required={!editId}
-                            />
-                        </div>
-
-
-                      <div className="text-center mt-4">
-                        <button className="btn btn-primary me-4" type="submit">
-                          {editId ? "Сохранить изменения" : "Создать заявку"}
-                        </button>
-                          <button className="btn btn-primary ms-2" onClick={() => setActive("right")}>
-                              Мои заявки
-                          </button>
-                      </div>
-
-
-                        {editId && (
-                            <button
-                                type="button"
-                                className="btn btn-secondary ms-2"
-                                onClick={() => {
-                                    setEditId(null);
-                                    // setOgrn("");
-                                    setAppNumber("");
-                                    setError(null);
-                                }}
-                            >
-                                Отмена
-                            </button>
-                        )}
-                    </form>
-                </div>
-                }
-                {active=="right" &&
-                <div className="card-body">
-
-                </div>
-                }
-            </div>
-
-            {/*<h3>Ваши заявки</h3>*/}
-            {/*<ul className="list-group">*/}
-            {/*  {requests.length === 0 && <li className="list-group-item">Заявок нет</li>}*/}
-            {/*  {requests.map((req) => (*/}
-            {/*    <li*/}
-            {/*      key={req.id}*/}
-            {/*      className="list-group-item d-flex justify-content-between align-items-center"*/}
-            {/*    >*/}
-            {/*      <div>*/}
-            {/*        <strong>ОГРН:</strong> {req.ogrn}*/}
-            {/*        <br />*/}
-            {/*        <strong>Номер:</strong> {req.appNumber}*/}
-            {/*      </div>*/}
-            {/*      <div>*/}
-            {/*        <button*/}
-            {/*          className="btn btn-sm btn-outline-secondary me-2"*/}
-            {/*          onClick={() => handleEdit(req)}*/}
-            {/*        >*/}
-            {/*          ✏️*/}
-            {/*        </button>*/}
-            {/*        <button*/}
-            {/*          className="btn btn-sm btn-outline-danger"*/}
-            {/*          onClick={() => handleDelete(req.id)}*/}
-            {/*        >*/}
-            {/*          🗑️*/}
-            {/*        </button>*/}
-            {/*      </div>*/}
-            {/*    </li>*/}
-            {/*  ))}*/}
-            {/*</ul>*/}
+            <img src={user.photo_url} alt="avatar" width="100" style={{ borderRadius: '50%' }} />
         </div>
+        // <div className="container-sm">
+        //
+        //     <h1>Привет, {user.first_name}!</h1>
+        //     {user.last_name && <p>Фамилия: {user.last_name}</p>}
+        //     <p>Юзернейм: @{user.username}</p>
+        //     <p>Telegram ID: {user.id}</p>
+        //     <h1 className="mb-1 fs-bold ">
+        //         {active == "left" ?
+        //         editId ? "Редактирование заявки" : "Создание заявки"
+        //         :"Мои заявки"
+        //         }</h1>
+        //
+        //     {/*{user}*/}
+        //     {/*{user.id}*/}
+        //     {/*{active == "left" &&*/}
+        //
+        //     <div className="card mb-0">
+        //         {active=="left" &&
+        //         <div className="card-body">
+        //             <form onSubmit={handleSubmit}>
+        //               {error && (
+        //                   <div className="alert alert-danger" role="alert">
+        //                     {error}
+        //                   </div>
+        //               )}
+        //
+        //                 <div className="mb-0">
+        //                     <div className="">
+        //                         {options.map((option, index) => (
+        //                             <Form.Check
+        //                                 key={option.value}
+        //                                 type="radio"
+        //                                 id={`radio-${index}`}
+        //                                 label={option.label}
+        //                                 name="radioGroup"
+        //                                 value={option.value}
+        //                                 checked={selectedOption === option.value}
+        //                                 onChange={handleChange}
+        //                                 className="mb-3 "
+        //                             />
+        //                         ))}
+        //                     </div>
+        //
+        //
+        //                     <label className="form-label mt-2 mb-1">Название компании</label>
+        //                     <input
+        //                         type="text"
+        //                         className="form-control"
+        //                         value={companyName}
+        //                         onChange={(e) => setCompanyName(e.target.value)}
+        //                         required={!editId}
+        //                     />
+        //
+        //                     <label className="form-label mt-2 mb-1">Количество счетов</label>
+        //                     <input
+        //                         type="text"
+        //                         className="form-control"
+        //                         value={numberOfAccounts}
+        //                         onChange={(e) => setNumberOfAccounts(e.target.value)}
+        //                         required={!editId}
+        //                     />
+        //
+        //                     <label className="form-label mt-2 mb-1">ИНН</label>
+        //                     <input
+        //                         type="text"
+        //                         className="form-control"
+        //                         value={Inn}
+        //                         onChange={(e) => setInn(e.target.value)}
+        //                         required={!editId}
+        //                     />
+        //
+        //                     <label className="form-label mt-2 mb-1">Email</label>
+        //                     <input
+        //                         type="text"
+        //                         className="form-control"
+        //                         value={email}
+        //                         onChange={(e) => setEmail(e.target.value)}
+        //                         required={!editId}
+        //                     />
+        //                 </div>
+        //
+        //
+        //               <div className="text-center mt-4">
+        //                 <button className="btn btn-primary me-4" type="submit">
+        //                   {editId ? "Сохранить изменения" : "Создать заявку"}
+        //                 </button>
+        //                   <button className="btn btn-primary ms-2" onClick={() => setActive("right")}>
+        //                       Мои заявки
+        //                   </button>
+        //               </div>
+        //
+        //
+        //                 {editId && (
+        //                     <button
+        //                         type="button"
+        //                         className="btn btn-secondary ms-2"
+        //                         onClick={() => {
+        //                             setEditId(null);
+        //                             // setOgrn("");
+        //                             setAppNumber("");
+        //                             setError(null);
+        //                         }}
+        //                     >
+        //                         Отмена
+        //                     </button>
+        //                 )}
+        //             </form>
+        //         </div>
+        //         }
+        //         {active=="right" &&
+        //         <div className="card-body">
+        //
+        //         </div>
+        //         }
+        //     </div>
+        //
+        //     {/*<h3>Ваши заявки</h3>*/}
+        //     {/*<ul className="list-group">*/}
+        //     {/*  {requests.length === 0 && <li className="list-group-item">Заявок нет</li>}*/}
+        //     {/*  {requests.map((req) => (*/}
+        //     {/*    <li*/}
+        //     {/*      key={req.id}*/}
+        //     {/*      className="list-group-item d-flex justify-content-between align-items-center"*/}
+        //     {/*    >*/}
+        //     {/*      <div>*/}
+        //     {/*        <strong>ОГРН:</strong> {req.ogrn}*/}
+        //     {/*        <br />*/}
+        //     {/*        <strong>Номер:</strong> {req.appNumber}*/}
+        //     {/*      </div>*/}
+        //     {/*      <div>*/}
+        //     {/*        <button*/}
+        //     {/*          className="btn btn-sm btn-outline-secondary me-2"*/}
+        //     {/*          onClick={() => handleEdit(req)}*/}
+        //     {/*        >*/}
+        //     {/*          ✏️*/}
+        //     {/*        </button>*/}
+        //     {/*        <button*/}
+        //     {/*          className="btn btn-sm btn-outline-danger"*/}
+        //     {/*          onClick={() => handleDelete(req.id)}*/}
+        //     {/*        >*/}
+        //     {/*          🗑️*/}
+        //     {/*        </button>*/}
+        //     {/*      </div>*/}
+        //     {/*    </li>*/}
+        //     {/*  ))}*/}
+        //     {/*</ul>*/}
+        // </div>
     );
 };
 
