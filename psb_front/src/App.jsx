@@ -333,7 +333,6 @@ const App = () => {
                                             }}>
                                             Отмена
                                     </button>
-                                    )}
                                 </div>
                             </form>
                         </div>
