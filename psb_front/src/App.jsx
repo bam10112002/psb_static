@@ -200,10 +200,6 @@ const App = () => {
   return (
     <div className="container-sm  mx-auto "  style={{ minWidth: "375px" }}>
 
-      <div>
-        Размер данных с сервера {requests.length}
-      </div>
-
       <h1 className="mb-1 fs-bold">
         {active === "left"
           ? editId ? "Редактирование заявки" : "Создание заявки"
