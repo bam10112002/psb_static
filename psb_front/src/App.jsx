@@ -199,7 +199,7 @@ const App = () => {
   // if (!user) return <div>Загрузка данных Telegram...</div>;
 
   return (
-    <div className="container-sm">
+    <div className="container-sm  mx-auto "  style={{ minWidth: "375px" }}>
 
       <div>
         Размер данных с сервера {requests.length}
@@ -225,7 +225,7 @@ const App = () => {
           : "Мои заявки"}
       </h1>
 
-      {error && <span className="text-danger d-block mb-2">{error}</span>}
+      {/*{error && <span className="text-danger d-block mb-2">{error}</span>}*/}
 
       <div className="card mb-0">
         {active === "left" && (
@@ -314,8 +314,7 @@ const App = () => {
 
         {active === "right" && (
           <div className="card-body">
-            <h3>Ваши заявки</h3>
-            <ul className="list-group">
+            {/*<div className="list-group">*/}
               {/*{requests[0]}*/}
               {requests.length === 0 ? <li className="list-group-item">Заявок нет</li>
                   :
@@ -380,7 +379,7 @@ const App = () => {
                 //   </div>
                 // </li>
               ))}
-            </ul>
+            {/*</div>*/}
           </div>
         )}
       </div>
