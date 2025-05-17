@@ -107,10 +107,10 @@ const App = () => {
                 fullname: editId.fullname,
             };
 
-            if (JSON.stringify(editId) === JSON.stringify(editIdAdditional)) {
-                setError("Введите хотя бы одно поле для обновления");
-                return;
-            }
+            // if (JSON.stringify(editId) === JSON.stringify(editIdAdditional)) {
+            //     setError("Введите хотя бы одно поле для обновления");
+            //     return;
+            // }
         } else {
             payload = {
                 ...(companyName.trim() && {company_name: companyName.trim()}),
@@ -324,6 +324,8 @@ const App = () => {
                                     <button className="btn btn-primary me-4" type="submit">
                                         {editId ? "Сохранить изменения" : "Создать заявку"}
                                     </button>
+
+                                    {!editId && (
                                     <button
                                         className="btn btn-primary ms-2"
                                         type="button"
@@ -331,6 +333,7 @@ const App = () => {
                                     >
                                         Мои заявки
                                     </button>
+                                    )}
                                     {editId && (
                                         <button
                                             type="button"
