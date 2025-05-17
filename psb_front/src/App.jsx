@@ -94,7 +94,7 @@ const App = () => {
         }
 
         let payload;
-        if (editId) {
+        if (!editId) {
             payload = {};
             payload = {
                 ...(editId.company_name.trim() && {company_name: editId.company_name.trim()}),
