@@ -210,7 +210,7 @@ const App = () => {
 
       <div className="card mb-0">
         {active === "left" && (
-          <div className="card-body">
+          <div className="card-body"  style={{ maxHeight: '80vh', overflowY: 'auto' }}>
             <form onSubmit={handleSubmit}>
               <div className="mb-0">
                 {options.map((option, index) => (
