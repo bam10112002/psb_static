@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Form } from "react-bootstrap";
+import {Badge, Form} from "react-bootstrap";
 import { Card, ListGroup } from "react-bootstrap";
 
 
@@ -178,23 +178,23 @@ const App = () => {
     }
   };
 
-  const handleEdit = (req) => {
-    setEditId(req.id);
-    setAppNumber(req.appNumber);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setError(null);
-  };
-
-  const handleDelete = async (id) => {
-    if (!window.confirm("Удалить заявку?")) return;
-    try {
-      const res = await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error(`Ошибка удаления: ${res.status}`);
-      fetchRequests();
-    } catch {
-      setError("Ошибка удаления заявки");
-    }
-  };
+  // const handleEdit = (req) => {
+  //   setEditId(req.id);
+  //   setAppNumber(req.appNumber);
+  //   window.scrollTo({ top: 0, behavior: "smooth" });
+  //   setError(null);
+  // };
+  //
+  // const handleDelete = async (id) => {
+  //   if (!window.confirm("Удалить заявку?")) return;
+  //   try {
+  //     const res = await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
+  //     if (!res.ok) throw new Error(`Ошибка удаления: ${res.status}`);
+  //     fetchRequests();
+  //   } catch {
+  //     setError("Ошибка удаления заявки");
+  //   }
+  // };
 
   // if (!user) return <div>Загрузка данных Telegram...</div>;
 
