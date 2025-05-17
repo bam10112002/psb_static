@@ -6,7 +6,7 @@ import {Card, ListGroup} from "react-bootstrap";
 
 const BASE_URL = "https://176-123-166-115.nip.io:444";
 
-const App = () => {
+export const App = () => {
     const [companyName, setCompanyName] = useState("");
     const [numberOfAccounts, setNumberOfAccounts] = useState("");
     const [inn, setInn] = useState("");
@@ -100,7 +100,7 @@ const App = () => {
             if (JSON.stringify(editId) === JSON.stringify(editIdAdditional)) {
                 setError("Введите хотя бы одно поле для обновления");
                 return;
-
+            }
 
             payload = editId;
         } else {
@@ -401,4 +401,4 @@ const App = () => {
     );
 };
 
-export default App;
+
