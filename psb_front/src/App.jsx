@@ -260,8 +260,8 @@ const App = () => {
                 )}
 
                 {active === "right"
-
                 &&
+                    (
                 editId ? (
                         <div className="card-body">
                             <form onSubmit={handleSubmit}>
@@ -405,7 +405,10 @@ const App = () => {
                                 ))}
                             {/*</div>*/}
                         </div>
-                    )}
+                    )
+
+                    )
+                }
             </div>
         </div>
     );
