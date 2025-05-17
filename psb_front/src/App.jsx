@@ -95,21 +95,14 @@ const App = () => {
 
         let payload;
         if (editId) {
-            payload = {
-                ...(editId.company_name.trim() && {company_name: editId.company_name.trim()}),
-                ...(editId.number_of_accounts.trim() && {number_of_accounts: parseInt(editId.number_of_accounts.trim())}),
-                ...(editId.inn.trim() && {inn: editId.inn.trim()}),
-                ...(editId.email.trim() && {email: editId.email.trim()}),
-                organizational_form: parseInt(editId.organizational_form),
-                user_id: userId,
-                phone_number: editId.phone_number,
-                fullname: editId.fullname,
-            };
 
-            // if (JSON.stringify(editId) === JSON.stringify(editIdAdditional)) {
-            //     setError("Введите хотя бы одно поле для обновления");
-            //     return;
-            // }
+
+            if (JSON.stringify(editId) === JSON.stringify(editIdAdditional)) {
+                setError("Введите хотя бы одно поле для обновления");
+                return;
+
+
+            payload = editId;
         } else {
             payload = {
                 ...(companyName.trim() && {company_name: companyName.trim()}),
