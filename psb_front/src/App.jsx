@@ -71,9 +71,11 @@ const App = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+    if (!user)
+      return
 
-    // const userId = user?.id;
-    const userId = 1;
+    const userId = user?.id;
+    // const userId = 2;
     if (!userId) {
       setError("UserId не найден, повторите позже");
       return;
