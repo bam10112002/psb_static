@@ -142,11 +142,11 @@ export const App = () => {
         await res.json();
         if (editId)
         {
-            window.confirm("Заявка была подредактирована.");
+            window.alert("Заявка была подредактирована.");
         }
         else
         {
-            window.confirm("Заявка была создана.");
+            window.alert("Заявка была создана.");
 
             setCompanyName("");
             setNumberOfAccounts("")
