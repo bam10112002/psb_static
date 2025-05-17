@@ -123,7 +123,7 @@ export const App = () => {
             };
         }
 
-        const url = editId ? `${BASE_URL}/${userId}` : BASE_URL;
+        const url = editId ? `${BASE_URL}/${editId.contract_id}` : BASE_URL;
         const method = editId ? "PUT" : "POST";
 
         const res = await fetch(url, {
