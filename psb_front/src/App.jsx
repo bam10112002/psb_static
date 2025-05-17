@@ -131,8 +131,11 @@ const App = () => {
             return
         }
 
+        setError("Запрос кинуул");
+
         await res.json();
         setEditId(null);
+        setEditIdAdditional(null);
         fetchRequests();
 
     };
