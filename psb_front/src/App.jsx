@@ -318,6 +318,20 @@ const App = () => {
                         <ListGroup.Item><strong>ФИО:</strong> {req.fullname}</ListGroup.Item>
                         <ListGroup.Item><strong>Телефон:</strong> {req.phone_number}</ListGroup.Item>
                       </ListGroup>
+                      <div>
+                        <button
+                          className="btn btn-sm btn-outline-secondary me-2"
+                          // onClick={() => handleEdit(req)}
+                        >
+                          ✏️
+                        </button>
+                        <button
+                          className="btn btn-sm btn-outline-danger"
+                          // onClick={() => handleDelete(req.id)}
+                        >
+                          🗑️
+                        </button>
+                      </div>
                     </Card.Body>
                   </Card>
 
