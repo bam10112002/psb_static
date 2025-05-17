@@ -312,7 +312,7 @@ const App = () => {
         )}
 
         {active === "right" && (
-          <div className="card-body">
+          <div className="card-body" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
             {/*<div className="list-group">*/}
               {/*{requests[0]}*/}
               {requests.length === 0 ? <li className="list-group-item">Заявок нет</li>
