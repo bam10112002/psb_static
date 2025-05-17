@@ -75,7 +75,7 @@ export const App = () => {
             // if (!res.ok) throw new Error(`Ошибка загрузки заявок: ${res.status}`);
             const data = await res.json();
             setRequests(data);
-            setError(null);
+            // setError(null);
         } catch {
             setError("Ошибка загрузки заявок");
         }
