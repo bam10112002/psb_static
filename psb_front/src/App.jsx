@@ -72,7 +72,8 @@ const App = () => {
     e.preventDefault();
     setError(null);
 
-    const userId = user?.id;
+    // const userId = user?.id;
+    const userId = 1;
     if (!userId) {
       setError("UserId не найден, повторите позже");
       return;
@@ -149,18 +150,24 @@ const App = () => {
     }
   };
 
-  if (!user) return <div>Загрузка данных Telegram...</div>;
+  // if (!user) return <div>Загрузка данных Telegram...</div>;
 
   return (
     <div className="container-sm">
+
       <div>
         Размер данных с сервера {requests.length}
       </div>
-      <h1>Привет, {user.first_name}!</h1>
+
+      {
+          user &&
+
+          <h1>Привет, {user.first_name}!</h1>
+
+      }
       {/*{user.last_name && <p>Фамилия: {user.last_name}</p>}*/}
       {/*<p>Юзернейм: @{user.username}</p>*/}
       {/*<p>Telegram ID: {user.id}</p>*/}
-
       <h1 className="mb-1 fs-bold">
         {active === "left"
           ? editId ? "Редактирование заявки" : "Создание заявки"
