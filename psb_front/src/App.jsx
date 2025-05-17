@@ -322,29 +322,17 @@ const App = () => {
 
                                 <div className="text-center mt-4">
                                     <button className="btn btn-primary me-4" type="submit">
-                                        {editId ? "Сохранить изменения" : "Создать заявку"}
+                                        Сохранить изменения!
                                     </button>
-
-                                    {!editId && (
                                     <button
-                                        className="btn btn-primary ms-2"
-                                        type="button"
-                                        onClick={() => setActive("right")}
-                                    >
-                                        Мои заявки
-                                    </button>
-                                    )}
-                                    {editId && (
-                                        <button
                                             type="button"
                                             className="btn btn-secondary ms-2"
                                             onClick={() => {
                                                 setEditId(null);
                                                 setError(null);
-                                            }}
-                                        >
+                                            }}>
                                             Отмена
-                                        </button>
+                                    </button>
                                     )}
                                 </div>
                             </form>
