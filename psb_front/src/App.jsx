@@ -101,7 +101,7 @@ export const App = () => {
                 ...(editId.number_of_accounts.trim() && {number_of_accounts: parseInt(editId.number_of_accounts.trim())}),
                 ...(editId.inn.trim() && {inn: editId.inn.trim()}),
                 ...(editId.email.trim() && {email: editId.email.trim()}),
-                organizational_form: parseInt(editId.organizational_form),
+                organizational_form: editId.organizational_form,
                 user_id: userId,
                 phone_number: editId.phone_number,
                 fullname: editId.fullname,
