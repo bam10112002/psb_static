@@ -23,10 +23,10 @@ export const App = () => {
     const [user, setUser] = useState(null);
 
     const options = [
-        {value: "1", label: "Организация в собственности РФ (балансовый счет 40506)"},
-        {value: "2", label: "Организация в собственности субъекта РФ (балансовый счет 40606)"},
-        {value: "3", label: "Негосударственные организации (балансовый счет 40706)"},
-        {value: "4", label: "ИП - исполнитель (балансовый счет 40825)"},
+        {value: "40506", label: "Организация в собственности РФ (балансовый счет 40506)"},
+        {value: "40606", label: "Организация в собственности субъекта РФ (балансовый счет 40606)"},
+        {value: "40706", label: "Негосударственные организации (балансовый счет 40706)"},
+        {value: "40825", label: "ИП - исполнитель (балансовый счет 40825)"},
     ];
 
     const [selectedOption, setSelectedOption] = useState(options[0].value);
@@ -138,13 +138,10 @@ export const App = () => {
             return
         }
 
-        setError("Запрос кинуул");
-
         await res.json();
         setEditId(null);
         setEditIdAdditional(null);
         fetchRequests();
-
     };
 
     const handleEdit = (req) => {
@@ -276,9 +273,9 @@ export const App = () => {
                                                     label={option.label}
                                                     name="radioGroup"
                                                     value={option.value}
-                                                    checked={editId.organizational_form === option.value}
+                                                    checked={editId.organizational_form === parseInt(option.value)}
                                                     onChange={() => {
-                                                        setEditId((prev) => ({...prev, organizational_form: option.value}))
+                                                        setEditId((prev) => ({...prev, organizational_form: parseInt(option.value)}))
                                                     }}
                                                     className="mb-3"
                                                 />
@@ -368,14 +365,15 @@ export const App = () => {
                                                         <ListGroup.Item><strong>Орг.
                                                             форма:</strong> {req.organizational_form}
                                                         </ListGroup.Item>
-                                                        <ListGroup.Item><strong>Счета:</strong> {req.number_of_accounts}
-                                                        </ListGroup.Item>
-                                                        <ListGroup.Item><strong>ИНН:</strong> {req.inn}</ListGroup.Item>
-                                                        <ListGroup.Item><strong>E-mail:</strong> {req.email}
-                                                        </ListGroup.Item>
                                                         <ListGroup.Item><strong>ФИО:</strong> {req.fullname}
                                                         </ListGroup.Item>
                                                         <ListGroup.Item><strong>Телефон:</strong> {req.phone_number}
+                                                        </ListGroup.Item>
+                                                        <ListGroup.Item><strong>E-mail:</strong> {req.email}
+                                                        </ListGroup.Item>
+                                                        <ListGroup.Item><strong>Счета:</strong> {req.number_of_accounts}
+                                                        </ListGroup.Item>
+                                                        <ListGroup.Item><strong>ИНН:</strong> {req.inn}
                                                         </ListGroup.Item>
                                                     </ListGroup>
                                                     <div className="text-end mt-1">
