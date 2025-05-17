@@ -107,10 +107,10 @@ export const App = () => {
                 fullname: editId.fullname,
             };
 
-            if (JSON.stringify(editId) === JSON.stringify(editIdAdditional)) {
-                setError("Введите хотя бы одно поле для обновления");
-                return;
-            }
+            // if (JSON.stringify(editId) === JSON.stringify(editIdAdditional)) {
+            //     setError("Введите хотя бы одно поле для обновления");
+            //     return;
+            // }
         } else {
             payload = {
                 ...(companyName.trim() && {company_name: companyName.trim()}),
