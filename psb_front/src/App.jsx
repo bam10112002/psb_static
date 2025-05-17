@@ -14,34 +14,7 @@ const App = () => {
   // const [appNumber, setAppNumber] = useState("");
 
 
-  const [requests, setRequests] = useState(
-      [
-        // {
-        //   "contract_id": 9,
-        //   "status": "OPEN",
-        //   "organizational_form": 3,
-        //   "company_name": "2",
-        //   "number_of_accounts": 2,
-        //   "inn": "2",
-        //   "email": "3@asd.com",
-        //   "fullname": "full",
-        //   "phone_number": "880800808080",
-        //   "user_id": 792430294
-        // },
-        // {
-        //   "contract_id": 10,
-        //   "status": "OPEN",
-        //   "organizational_form": 3,
-        //   "company_name": "2",
-        //   "number_of_accounts": 2,
-        //   "inn": "2",
-        //   "email": "3@asd.com",
-        //   "fullname": "full",
-        //   "phone_number": "880800808080",
-        //   "user_id": 792430294
-        // }
-      ]
-  );
+  const [requests, setRequests] = useState([]);
 
 
   const [editId, setEditId] = useState(null);
@@ -184,16 +157,16 @@ const App = () => {
   //   setError(null);
   // };
   //
-  // const handleDelete = async (id) => {
-  //   if (!window.confirm("Удалить заявку?")) return;
-  //   try {
-  //     const res = await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
-  //     if (!res.ok) throw new Error(`Ошибка удаления: ${res.status}`);
-  //     fetchRequests();
-  //   } catch {
-  //     setError("Ошибка удаления заявки");
-  //   }
-  // };
+  const handleDelete = async (id) => {
+    if (!window.confirm("Удалить заявку?")) return;
+    try {
+      const res = await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error(`Ошибка удаления: ${res.status}`);
+      fetchRequests();
+    } catch {
+      setError("Ошибка удаления заявки");
+    }
+  };
 
   // if (!user) return <div>Загрузка данных Telegram...</div>;
 
@@ -327,7 +300,7 @@ const App = () => {
                         </button>
                         <button
                           className="btn btn-sm btn-outline-danger"
-                          // onClick={() => handleDelete(req.id)}
+                          onClick={() => handleDelete(req.contract_id)}
                         >
                           🗑️
                         </button>
@@ -335,44 +308,7 @@ const App = () => {
                     </Card.Body>
                   </Card>
 
-                  // <Card key={`card-${req.contract_id}`} className="mb-3 shadow-sm">
-                  //   <Card.Header className="fw-bold">Компания: {req.company_name}</Card.Header>
-                  //   <Card.Body>
-                  //     <ListGroup variant="flush">
-                  //       <ListGroup.Item><strong>Статус:</strong> {req.status}</ListGroup.Item>
-                  //       <ListGroup.Item><strong>Орг. форма:</strong> {req.organizational_form}</ListGroup.Item>
-                  //       <ListGroup.Item><strong>Количество счетов:</strong> {req.number_of_accounts}</ListGroup.Item>
-                  //       <ListGroup.Item><strong>ИНН:</strong> {req.inn}</ListGroup.Item>
-                  //       <ListGroup.Item><strong>E-mail:</strong> {req.email}</ListGroup.Item>
-                  //       <ListGroup.Item><strong>ФИО:</strong> {req.fullname}</ListGroup.Item>
-                  //       <ListGroup.Item><strong>Телефон:</strong> {req.phone_number}</ListGroup.Item>
-                  //     </ListGroup>
-                  //   </Card.Body>
-                  // </Card>
 
-                // <li
-                //   key={req.id}
-                //   className="list-group-item d-flex justify-content-between align-items-center"
-                // >
-                //   <div>
-                //     <strong>ОГРН:</strong> {req.ogrn}<br />
-                //     <strong>Номер:</strong> {req.appNumber}
-                //   </div>
-                //   <div>
-                //     <button
-                //       className="btn btn-sm btn-outline-secondary me-2"
-                //       onClick={() => handleEdit(req)}
-                //     >
-                //       ✏️
-                //     </button>
-                //     <button
-                //       className="btn btn-sm btn-outline-danger"
-                //       onClick={() => handleDelete(req.id)}
-                //     >
-                //       🗑️
-                //     </button>
-                //   </div>
-                // </li>
               ))}
             {/*</div>*/}
           </div>
