@@ -11,7 +11,7 @@ const App = () => {
   const [numberOfAccounts, setNumberOfAccounts] = useState("");
   const [inn, setInn] = useState("");
   const [email, setEmail] = useState("");
-  const [appNumber, setAppNumber] = useState("");
+  // const [appNumber, setAppNumber] = useState("");
 
 
   const [requests, setRequests] = useState(
@@ -87,7 +87,7 @@ const App = () => {
     }
     else
     {
-      fetchRequests();
+      fetchRequests().then(() => {});
     }
   }, [user]);
 
@@ -101,7 +101,8 @@ const App = () => {
       }
 
       const res = await fetch(`${BASE_URL}/${user.id}`);
-      if (!res.ok) throw new Error(`Ошибка загрузки заявок: ${res.status}`);
+      if (!res.ok) return;
+      // if (!res.ok) throw new Error(`Ошибка загрузки заявок: ${res.status}`);
       const data = await res.json();
       setRequests(data);
       setError(null);
@@ -157,7 +158,6 @@ const App = () => {
     const url = editId ? `${BASE_URL}/${editId}` : BASE_URL;
     const method = editId ? "PUT" : "POST";
 
-    try {
       const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
@@ -165,17 +165,16 @@ const App = () => {
       });
 
       if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(`Ошибка сервера: ${res.status} ${errorText}`);
+        setError("Ошибка при сохранении заявки");
+
+        return
       }
 
       await res.json();
-      setAppNumber("");
+      // setAppNumber("");
       setEditId(null);
       fetchRequests();
-    } catch {
-      setError("Ошибка при сохранении заявки");
-    }
+
   };
 
   // const handleEdit = (req) => {
@@ -225,7 +224,7 @@ const App = () => {
           : "Мои заявки"}
       </h1>
 
-      {/*{error && <span className="text-danger d-block mb-2">{error}</span>}*/}
+      {error && <span className="text-danger d-block mb-2">{error}</span>}
 
       <div className="card mb-0">
         {active === "left" && (
@@ -300,7 +299,7 @@ const App = () => {
                     className="btn btn-secondary ms-2"
                     onClick={() => {
                       setEditId(null);
-                      setAppNumber("");
+                      // setAppNumber("");
                       setError(null);
                     }}
                   >
