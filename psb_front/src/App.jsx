@@ -11,6 +11,7 @@ export const App = () => {
     const [numberOfAccounts, setNumberOfAccounts] = useState("");
     const [inn, setInn] = useState("");
     const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
 
 
     const [requests, setRequests] = useState([]);
@@ -74,7 +75,7 @@ export const App = () => {
             // if (!res.ok) throw new Error(`Ошибка загрузки заявок: ${res.status}`);
             const data = await res.json();
             setRequests(data);
-            // setError(null);
+            setError(null);
         } catch {
             setError("Ошибка загрузки заявок");
         }
@@ -118,7 +119,7 @@ export const App = () => {
                 ...(email.trim() && {email: email.trim()}),
                 organizational_form: parseInt(selectedOption),
                 user_id: userId,
-                phone_number: "880800808080",
+                ...(phone.trim() && {phone_number: phone.trim()}),
                 fullname: user.first_name,
             };
         }
@@ -139,8 +140,24 @@ export const App = () => {
         }
 
         await res.json();
+        if (editId)
+        {
+            window.confirm("Заявка была подредактирована.");
+        }
+        else
+        {
+            window.confirm("Заявка была создана.");
+
+            setCompanyName("");
+            setNumberOfAccounts("")
+            setInn("")
+            setEmail("")
+            setPhone("");
+        }
+
         setEditId(null);
         setEditIdAdditional(null);
+
         fetchRequests();
     };
 
@@ -228,6 +245,15 @@ export const App = () => {
                                     onChange={(e) => setEmail(e.target.value)}
                                     required={!editId}
                                 />
+
+                                <label className="form-label mt-2 mb-1">Телефон</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)}
+                                    required={!editId}
+                                />
                             </div>
 
                             <div className="text-center mt-4">
@@ -308,6 +334,15 @@ export const App = () => {
                                                 className="form-control"
                                                 value={editId.email}
                                                 onChange={(e) => setEditId((prev) => ({...prev, email: e.target.value}))}
+                                                required={!editId}
+                                            />
+
+                                            <label className="form-label mt-2 mb-1">Телефон</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                value={editId.phone_number}
+                                                onChange={(e) => setEditId((prev) => ({...prev, phone_number: e.target.value}))}
                                                 required={!editId}
                                             />
                                         </div>
