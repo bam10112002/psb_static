@@ -208,9 +208,9 @@ const App = () => {
 
       {error && <span className="text-danger d-block mb-2">{error}</span>}
 
-      <div className="card mb-0">
+      <div className="card mb-0" style={{ maxHeight: '85vh', overflowY: 'auto' }}>
         {active === "left" && (
-          <div className="card-body"  style={{ maxHeight: '80vh', overflowY: 'auto' }}>
+          <div className="card-body"  >
             <form onSubmit={handleSubmit}>
               <div className="mb-0">
                 {options.map((option, index) => (
@@ -294,7 +294,7 @@ const App = () => {
         )}
 
         {active === "right" && (
-          <div className="card-body" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
+          <div className="card-body">
             {/*<div className="list-group">*/}
               {/*{requests[0]}*/}
               {requests.length === 0 ? <li className="list-group-item">Заявок нет</li>
