@@ -261,145 +261,148 @@ const App = () => {
 
                 {active === "right"
 
-                    &&
-                    editId ? (
-                            <div className="card-body">
-                                <form onSubmit={handleSubmit}>
-                                    <div className="mb-0">
-                                        {options.map((option, index) => (
-                                            <Form.Check
-                                                key={option.value}
-                                                type="radio"
-                                                id={`radio-${index}`}
-                                                label={option.label}
-                                                name="radioGroup"
-                                                value={option.value}
-                                                checked={editId.organizational_form === option.value}
-                                                onChange={handleChange}
-                                                className="mb-3"
-                                            />
-                                        ))}
-
-                                        <label className="form-label mt-2 mb-1">Название компании</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            value={editId.company_name}
-                                            onChange={(e) => setEditId((prev)=>({...prev, company_name: e.target.value}))}
-                                            required={!editId}
+                &&
+                editId ? (
+                        <div className="card-body">
+                            <form onSubmit={handleSubmit}>
+                                <div className="mb-0">
+                                    {options.map((option, index) => (
+                                        <Form.Check
+                                            key={option.value}
+                                            type="radio"
+                                            id={`radio-${index}`}
+                                            label={option.label}
+                                            name="radioGroup"
+                                            value={option.value}
+                                            checked={editId.organizational_form === option.value}
+                                            onChange={()=>{setEditId((prev) => ({...prev, organizational_form: option.value}))}}
+                                            className="mb-3"
                                         />
-
-                                        <label className="form-label mt-2 mb-1">Количество счетов</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            value={editId.number_of_accounts}
-                                            onChange={(e) => setEditId((prev)=>({...prev, number_of_accounts: e.target.value}))}
-                                            required={!editId}
-                                        />
-
-                                        <label className="form-label mt-2 mb-1">ИНН</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            value={editId.inn}
-                                            onChange={(e) => setEditId((prev)=>({...prev, inn: e.target.value}))}
-                                            required={!editId}
-                                        />
-
-                                        <label className="form-label mt-2 mb-1">Email</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            value={editId.email}
-                                            onChange={(e) => setEditId((prev)=>({...prev, email: e.target.value}))}
-                                            required={!editId}
-                                        />
-                                    </div>
-
-                                    <div className="text-center mt-4">
-                                        <button className="btn btn-primary me-4" type="submit">
-                                            {editId ? "Сохранить изменения" : "Создать заявку"}
-                                        </button>
-                                        <button
-                                            className="btn btn-primary ms-2"
-                                            type="button"
-                                            onClick={() => setActive("right")}
-                                        >
-                                            Мои заявки
-                                        </button>
-                                        {editId && (
-                                            <button
-                                                type="button"
-                                                className="btn btn-secondary ms-2"
-                                                onClick={() => {
-                                                    setEditId(null);
-                                                    setError(null);
-                                                }}
-                                            >
-                                                Отмена
-                                            </button>
-                                        )}
-                                    </div>
-                                </form>
-                            </div>
-                        ) :
-
-
-                        (
-                            <div className="card-body">
-                                {/*<div className="list-group">*/}
-                                {/*{requests[0]}*/}
-                                {requests.length === 0 ? <li className="list-group-item">Заявок нет</li>
-                                    :
-                                    requests.map((req) => (
-
-                                        <Card key={`card-${req.contract_id}`} className="mb-3 shadow-sm rounded-4"
-                                              style={{fontSize: "0.95rem"}}>
-                                            <Card.Body className="p-3">
-                                                <Card.Title className="mb-2 fs-6">
-                                                    {req.company_name}
-                                                    <Badge bg={getStatusVariant(req.status)} className="ms-2">
-                                                        {req.status}
-                                                    </Badge>
-                                                </Card.Title>
-
-                                                <ListGroup variant="flush" className="mt-2">
-                                                    <ListGroup.Item><strong>Орг.
-                                                        форма:</strong> {req.organizational_form}
-                                                    </ListGroup.Item>
-                                                    <ListGroup.Item><strong>Счета:</strong> {req.number_of_accounts}
-                                                    </ListGroup.Item>
-                                                    <ListGroup.Item><strong>ИНН:</strong> {req.inn}</ListGroup.Item>
-                                                    <ListGroup.Item><strong>E-mail:</strong> {req.email}
-                                                    </ListGroup.Item>
-                                                    <ListGroup.Item><strong>ФИО:</strong> {req.fullname}
-                                                    </ListGroup.Item>
-                                                    <ListGroup.Item><strong>Телефон:</strong> {req.phone_number}
-                                                    </ListGroup.Item>
-                                                </ListGroup>
-                                                <div className="text-end mt-1">
-                                                    <button
-                                                        className="btn btn-sm btn-outline-secondary me-2"
-                                                        onClick={() => handleEdit(req)}
-                                                    >
-                                                        ✏️
-                                                    </button>
-                                                    <button
-                                                        className="btn btn-sm btn-outline-danger"
-                                                        onClick={() => handleDelete(req.contract_id)}
-                                                    >
-                                                        🗑️
-                                                    </button>
-                                                </div>
-                                            </Card.Body>
-                                        </Card>
-
-
                                     ))}
-                                {/*</div>*/}
-                            </div>
-                        )}
+
+                                    <label className="form-label mt-2 mb-1">Название компании</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={editId.company_name}
+                                        onChange={(e) => setEditId((prev) => ({...prev, company_name: e.target.value}))}
+                                        required={!editId}
+                                    />
+
+                                    <label className="form-label mt-2 mb-1">Количество счетов</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={editId.number_of_accounts}
+                                        onChange={(e) => setEditId((prev) => ({
+                                            ...prev,
+                                            number_of_accounts: e.target.value
+                                        }))}
+                                        required={!editId}
+                                    />
+
+                                    <label className="form-label mt-2 mb-1">ИНН</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={editId.inn}
+                                        onChange={(e) => setEditId((prev) => ({...prev, inn: e.target.value}))}
+                                        required={!editId}
+                                    />
+
+                                    <label className="form-label mt-2 mb-1">Email</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={editId.email}
+                                        onChange={(e) => setEditId((prev) => ({...prev, email: e.target.value}))}
+                                        required={!editId}
+                                    />
+                                </div>
+
+                                <div className="text-center mt-4">
+                                    <button className="btn btn-primary me-4" type="submit">
+                                        {editId ? "Сохранить изменения" : "Создать заявку"}
+                                    </button>
+                                    <button
+                                        className="btn btn-primary ms-2"
+                                        type="button"
+                                        onClick={() => setActive("right")}
+                                    >
+                                        Мои заявки
+                                    </button>
+                                    {editId && (
+                                        <button
+                                            type="button"
+                                            className="btn btn-secondary ms-2"
+                                            onClick={() => {
+                                                setEditId(null);
+                                                setError(null);
+                                            }}
+                                        >
+                                            Отмена
+                                        </button>
+                                    )}
+                                </div>
+                            </form>
+                        </div>
+                    ) :
+
+
+                    (
+                        <div className="card-body">
+                            {/*<div className="list-group">*/}
+                            {/*{requests[0]}*/}
+                            {requests.length === 0 ? <li className="list-group-item">Заявок нет</li>
+                                :
+                                requests.map((req) => (
+
+                                    <Card key={`card-${req.contract_id}`} className="mb-3 shadow-sm rounded-4"
+                                          style={{fontSize: "0.95rem"}}>
+                                        <Card.Body className="p-3">
+                                            <Card.Title className="mb-2 fs-6">
+                                                {req.company_name}
+                                                <Badge bg={getStatusVariant(req.status)} className="ms-2">
+                                                    {req.status}
+                                                </Badge>
+                                            </Card.Title>
+
+                                            <ListGroup variant="flush" className="mt-2">
+                                                <ListGroup.Item><strong>Орг.
+                                                    форма:</strong> {req.organizational_form}
+                                                </ListGroup.Item>
+                                                <ListGroup.Item><strong>Счета:</strong> {req.number_of_accounts}
+                                                </ListGroup.Item>
+                                                <ListGroup.Item><strong>ИНН:</strong> {req.inn}</ListGroup.Item>
+                                                <ListGroup.Item><strong>E-mail:</strong> {req.email}
+                                                </ListGroup.Item>
+                                                <ListGroup.Item><strong>ФИО:</strong> {req.fullname}
+                                                </ListGroup.Item>
+                                                <ListGroup.Item><strong>Телефон:</strong> {req.phone_number}
+                                                </ListGroup.Item>
+                                            </ListGroup>
+                                            <div className="text-end mt-1">
+                                                <button
+                                                    className="btn btn-sm btn-outline-secondary me-2"
+                                                    onClick={() => handleEdit(req)}
+                                                >
+                                                    ✏️
+                                                </button>
+                                                <button
+                                                    className="btn btn-sm btn-outline-danger"
+                                                    onClick={() => handleDelete(req.contract_id)}
+                                                >
+                                                    🗑️
+                                                </button>
+                                            </div>
+                                        </Card.Body>
+                                    </Card>
+
+
+                                ))}
+                            {/*</div>*/}
+                        </div>
+                    )}
             </div>
         </div>
     );
