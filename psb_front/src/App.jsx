@@ -262,7 +262,7 @@ const App = () => {
                 {active === "right"
 
                     &&
-                    active === "left" ? (
+                    editId ? (
                             <div className="card-body">
                                 <form onSubmit={handleSubmit}>
                                     <div className="mb-0">
