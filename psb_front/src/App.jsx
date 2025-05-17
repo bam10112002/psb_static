@@ -137,9 +137,9 @@ const App = () => {
         ...(inn.trim() && { inn: inn.trim() }),
         ...(email.trim() && { email: email.trim() }),
         organizational_form: parseInt(selectedOption),
-        user_id: user.first_name,
+        user_id: userId,
         phone_number: "880800808080",
-        fullname: "full",
+        fullname: user.first_name,
       };
     }
 
