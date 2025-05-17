@@ -98,7 +98,7 @@ export const App = () => {
         if (editId) {
             payload = {
                 ...(editId.company_name.trim() && {company_name: editId.company_name.trim()}),
-                number_of_accounts: editId.number_of_accounts.trim(),
+                number_of_accounts: editId.number_of_accounts,
                 ...(editId.inn.trim() && {inn: editId.inn.trim()}),
                 ...(editId.email.trim() && {email: editId.email.trim()}),
                 organizational_form: editId.organizational_form,
