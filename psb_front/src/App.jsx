@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form } from "react-bootstrap";
+import { Card, ListGroup } from "react-bootstrap";
+
 
 const BASE_URL = "https://176-123-166-115.nip.io:444";
 
@@ -10,7 +12,38 @@ const App = () => {
   const [inn, setInn] = useState("");
   const [email, setEmail] = useState("");
   const [appNumber, setAppNumber] = useState("");
-  const [requests, setRequests] = useState([]);
+
+
+  const [requests, setRequests] = useState(
+      [
+        // {
+        //   "contract_id": 9,
+        //   "status": "OPEN",
+        //   "organizational_form": 3,
+        //   "company_name": "2",
+        //   "number_of_accounts": 2,
+        //   "inn": "2",
+        //   "email": "3@asd.com",
+        //   "fullname": "full",
+        //   "phone_number": "880800808080",
+        //   "user_id": 792430294
+        // },
+        // {
+        //   "contract_id": 10,
+        //   "status": "OPEN",
+        //   "organizational_form": 3,
+        //   "company_name": "2",
+        //   "number_of_accounts": 2,
+        //   "inn": "2",
+        //   "email": "3@asd.com",
+        //   "fullname": "full",
+        //   "phone_number": "880800808080",
+        //   "user_id": 792430294
+        // }
+      ]
+  );
+
+
   const [editId, setEditId] = useState(null);
   const [error, setError] = useState(null);
   const [active, setActive] = useState("left");
@@ -104,7 +137,7 @@ const App = () => {
         ...(inn.trim() && { inn: inn.trim() }),
         ...(email.trim() && { email: email.trim() }),
         organizational_form: parseInt(selectedOption),
-        user_id: userId,
+        user_id: user.first_name,
         phone_number: "880800808080",
         fullname: "full",
       };
@@ -163,9 +196,14 @@ const App = () => {
 
       {
           user &&
-
+          <>
           <h1>Привет, {user.first_name}!</h1>
-
+            {user.last_name && <p>Фамилия: {user.last_name}</p>}
+            {user.phone && <p>Фамилия: {user.phone}</p>}
+            {user.phone_number && <p>Фамилия: {user.phone_number}</p>}
+            <p>Юзернейм: @{user.username}</p>
+            <p>Telegram ID: {user.id}</p>
+          </>
       }
       {/*{user.last_name && <p>Фамилия: {user.last_name}</p>}*/}
       {/*<p>Юзернейм: @{user.username}</p>*/}
@@ -267,31 +305,49 @@ const App = () => {
           <div className="card-body">
             <h3>Ваши заявки</h3>
             <ul className="list-group">
-              {requests.length === 0 && <li className="list-group-item">Заявок нет</li>}
-              {requests.map((req) => (
-                <li
-                  key={req.id}
-                  className="list-group-item d-flex justify-content-between align-items-center"
-                >
-                  <div>
-                    <strong>ОГРН:</strong> {req.ogrn}<br />
-                    <strong>Номер:</strong> {req.appNumber}
-                  </div>
-                  <div>
-                    <button
-                      className="btn btn-sm btn-outline-secondary me-2"
-                      onClick={() => handleEdit(req)}
-                    >
-                      ✏️
-                    </button>
-                    <button
-                      className="btn btn-sm btn-outline-danger"
-                      onClick={() => handleDelete(req.id)}
-                    >
-                      🗑️
-                    </button>
-                  </div>
-                </li>
+              {/*{requests[0]}*/}
+              {requests.length === 0 ? <li className="list-group-item">Заявок нет</li>
+                  :
+              requests.map((req) => (
+
+                  <Card key={`card-${req.contract_id}`} className="mb-3 shadow-sm">
+                    <Card.Header className="fw-bold">Компания: {req.company_name}</Card.Header>
+                    <Card.Body>
+                      <ListGroup variant="flush">
+                        <ListGroup.Item><strong>Статус:</strong> {req.status}</ListGroup.Item>
+                        <ListGroup.Item><strong>Орг. форма:</strong> {req.organizational_form}</ListGroup.Item>
+                        <ListGroup.Item><strong>Количество счетов:</strong> {req.number_of_accounts}</ListGroup.Item>
+                        <ListGroup.Item><strong>ИНН:</strong> {req.inn}</ListGroup.Item>
+                        <ListGroup.Item><strong>E-mail:</strong> {req.email}</ListGroup.Item>
+                        <ListGroup.Item><strong>ФИО:</strong> {req.fullname}</ListGroup.Item>
+                        <ListGroup.Item><strong>Телефон:</strong> {req.phone_number}</ListGroup.Item>
+                      </ListGroup>
+                    </Card.Body>
+                  </Card>
+
+                // <li
+                //   key={req.id}
+                //   className="list-group-item d-flex justify-content-between align-items-center"
+                // >
+                //   <div>
+                //     <strong>ОГРН:</strong> {req.ogrn}<br />
+                //     <strong>Номер:</strong> {req.appNumber}
+                //   </div>
+                //   <div>
+                //     <button
+                //       className="btn btn-sm btn-outline-secondary me-2"
+                //       onClick={() => handleEdit(req)}
+                //     >
+                //       ✏️
+                //     </button>
+                //     <button
+                //       className="btn btn-sm btn-outline-danger"
+                //       onClick={() => handleDelete(req.id)}
+                //     >
+                //       🗑️
+                //     </button>
+                //   </div>
+                // </li>
               ))}
             </ul>
           </div>
