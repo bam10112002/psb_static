@@ -204,20 +204,6 @@ const App = () => {
         Размер данных с сервера {requests.length}
       </div>
 
-      {
-          user &&
-          <>
-          <h1>Привет, {user.first_name}!</h1>
-            {user.last_name && <p>Фамилия: {user.last_name}</p>}
-            {user.phone && <p>Фамилия: {user.phone}</p>}
-            {user.phone_number && <p>Фамилия: {user.phone_number}</p>}
-            <p>Юзернейм: @{user.username}</p>
-            <p>Telegram ID: {user.id}</p>
-          </>
-      }
-      {/*{user.last_name && <p>Фамилия: {user.last_name}</p>}*/}
-      {/*<p>Юзернейм: @{user.username}</p>*/}
-      {/*<p>Telegram ID: {user.id}</p>*/}
       <h1 className="mb-1 fs-bold">
         {active === "left"
           ? editId ? "Редактирование заявки" : "Создание заявки"
