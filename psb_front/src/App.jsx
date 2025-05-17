@@ -30,19 +30,28 @@ const App = () => {
   };
 
   useEffect(() => {
-    const tg = window.Telegram?.WebApp;
-
-    if (tg?.initDataUnsafe?.user) {
-      setUser(tg.initDataUnsafe.user);
-      tg.ready();
-    } else {
-      setError("Ошибка инициализации Telegram WebApp. Перезапустите приложение.");
+    console.log("hello")
+    if (!user)
+    {
+      const tg = window.Telegram?.WebApp;
+      if (tg?.initDataUnsafe?.user) {
+        setUser(tg.initDataUnsafe.user);
+        tg.ready();
+      } else {
+        setError("Ошибка инициализации Telegram WebApp. Перезапустите приложение.");
+      }
     }
-  }, []);
+    else
+    {
+      fetchRequests();
+    }
+  }, [user]);
 
   const fetchRequests = async () => {
-    try {
-      if (!user?.id) {
+    try
+    {
+      if (!user)
+      {
         setError("Пользовательские данные не найдены в Telegram");
         return;
       }
@@ -52,7 +61,9 @@ const App = () => {
       const data = await res.json();
       setRequests(data);
       setError(null);
-    } catch {
+    }
+    catch
+    {
       setError("Ошибка загрузки заявок");
     }
   };
@@ -142,10 +153,13 @@ const App = () => {
 
   return (
     <div className="container-sm">
+      <div>
+        Размер данных с сервера {requests.length}
+      </div>
       <h1>Привет, {user.first_name}!</h1>
-      {user.last_name && <p>Фамилия: {user.last_name}</p>}
-      <p>Юзернейм: @{user.username}</p>
-      <p>Telegram ID: {user.id}</p>
+      {/*{user.last_name && <p>Фамилия: {user.last_name}</p>}*/}
+      {/*<p>Юзернейм: @{user.username}</p>*/}
+      {/*<p>Telegram ID: {user.id}</p>*/}
 
       <h1 className="mb-1 fs-bold">
         {active === "left"
