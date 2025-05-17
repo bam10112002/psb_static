@@ -62,6 +62,17 @@ const App = () => {
     setSelectedOption(e.target.value);
   };
 
+  const getStatusVariant = (status) => {
+    switch (status) {
+      case "OPEN":
+        return "success";
+      case "CLOSED":
+        return "secondary";
+      default:
+        return "dark";
+    }
+  };
+
   useEffect(() => {
     console.log("hello")
     if (!user)
@@ -310,13 +321,18 @@ const App = () => {
                   :
               requests.map((req) => (
 
-                  <Card key={`card-${req.contract_id}`} className="mb-3 shadow-sm">
-                    <Card.Header className="fw-bold">Компания: {req.company_name}</Card.Header>
-                    <Card.Body>
-                      <ListGroup variant="flush">
-                        <ListGroup.Item><strong>Статус:</strong> {req.status}</ListGroup.Item>
+                  <Card  key={`card-${req.contract_id}`} className="mb-3 shadow-sm rounded-4" style={{ fontSize: "0.95rem" }}>
+                    <Card.Body className="p-3">
+                      <Card.Title className="mb-2 fs-6">
+                        {req.company_name}
+                        <Badge bg={getStatusVariant(req.status)} className="ms-2">
+                          {req.status}
+                        </Badge>
+                      </Card.Title>
+
+                      <ListGroup variant="flush" className="mt-2">
                         <ListGroup.Item><strong>Орг. форма:</strong> {req.organizational_form}</ListGroup.Item>
-                        <ListGroup.Item><strong>Количество счетов:</strong> {req.number_of_accounts}</ListGroup.Item>
+                        <ListGroup.Item><strong>Счета:</strong> {req.number_of_accounts}</ListGroup.Item>
                         <ListGroup.Item><strong>ИНН:</strong> {req.inn}</ListGroup.Item>
                         <ListGroup.Item><strong>E-mail:</strong> {req.email}</ListGroup.Item>
                         <ListGroup.Item><strong>ФИО:</strong> {req.fullname}</ListGroup.Item>
@@ -324,6 +340,21 @@ const App = () => {
                       </ListGroup>
                     </Card.Body>
                   </Card>
+
+                  // <Card key={`card-${req.contract_id}`} className="mb-3 shadow-sm">
+                  //   <Card.Header className="fw-bold">Компания: {req.company_name}</Card.Header>
+                  //   <Card.Body>
+                  //     <ListGroup variant="flush">
+                  //       <ListGroup.Item><strong>Статус:</strong> {req.status}</ListGroup.Item>
+                  //       <ListGroup.Item><strong>Орг. форма:</strong> {req.organizational_form}</ListGroup.Item>
+                  //       <ListGroup.Item><strong>Количество счетов:</strong> {req.number_of_accounts}</ListGroup.Item>
+                  //       <ListGroup.Item><strong>ИНН:</strong> {req.inn}</ListGroup.Item>
+                  //       <ListGroup.Item><strong>E-mail:</strong> {req.email}</ListGroup.Item>
+                  //       <ListGroup.Item><strong>ФИО:</strong> {req.fullname}</ListGroup.Item>
+                  //       <ListGroup.Item><strong>Телефон:</strong> {req.phone_number}</ListGroup.Item>
+                  //     </ListGroup>
+                  //   </Card.Body>
+                  // </Card>
 
                 // <li
                 //   key={req.id}
