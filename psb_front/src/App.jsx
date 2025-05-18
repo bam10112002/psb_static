@@ -87,12 +87,12 @@ export const App = () => {
         console.log("start validate")
 
         if (editId) {
-            if (!editId.companyName.trim()) newErrors = "Введите название компании.";
-            if (editId.numberOfAccounts <= 0)
+            if (!editId.company_name.trim()) newErrors = "Введите название компании.";
+            if (editId.number_of_accounts <= 0)
                 newErrors = "Введите корректное количество счетов.";
             if (!/^\d{10}(\d{2})?$/.test(editId.inn)) newErrors = "ИНН должен содержать 10 или 12 цифр.";
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(editId.email)) newErrors = "Введите корректный Email.";
-            if (editId.phone.length != 17) newErrors = "Введите корректный номер телефона.";
+            if (editId.phone_number.length != 17) newErrors = "Введите корректный номер телефона.";
         }
         else
         {
