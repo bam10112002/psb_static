@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Badge, Form} from "react-bootstrap";
 import {Card, ListGroup} from "react-bootstrap";
-
+import { IMaskInput } from 'react-imask';
 
 const BASE_URL = "https://176-123-166-115.nip.io:444";
 
@@ -81,8 +81,44 @@ export const App = () => {
         }
     };
 
+
+    const validate = () => {
+        let newErrors = "";
+        console.log("start validate")
+
+        if (editId) {
+            if (!editId.companyName.trim()) newErrors = "Введите название компании.";
+            if (editId.numberOfAccounts <= 0)
+                newErrors = "Введите корректное количество счетов.";
+            if (!/^\d{10}(\d{2})?$/.test(editId.inn)) newErrors = "ИНН должен содержать 10 или 12 цифр.";
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(editId.email)) newErrors = "Введите корректный Email.";
+            if (!/^\d{10,}$/.test(editId.phone)) newErrors = "Введите корректный номер телефона.";
+        }
+        else
+        {
+            if (!companyName.trim()) newErrors = "Введите название компании.";
+            if (!/^\d+$/.test(numberOfAccounts) || parseInt(numberOfAccounts) <= 0)
+                newErrors = "Введите корректное количество счетов.";
+            if (!/^\d{10}(\d{2})?$/.test(inn)) newErrors = "ИНН должен содержать 10 или 12 цифр.";
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors = "Введите корректный Email.";
+            if (!/^\d{10,}$/.test(phone)) newErrors = "Введите корректный номер телефона.";
+        }
+
+        console.log("end validate")
+
+        setError(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!validate())
+        {
+            console.log("validate false")
+            return;
+        }
+        console.log("validate success")
+
         setError(null);
         if (!user)
             return
@@ -247,12 +283,12 @@ export const App = () => {
                                 />
 
                                 <label className="form-label mt-2 mb-1">Телефон</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
+
+                                <IMaskInput
+                                    mask="+{7}(000)-000-00-00"
                                     value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
-                                    required={!editId}
+                                    onAccept={(val) => setPhone(val)}
+                                    className="form-control"
                                 />
                             </div>
 
@@ -338,13 +374,13 @@ export const App = () => {
                                             />
 
                                             <label className="form-label mt-2 mb-1">Телефон</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
+                                            <IMaskInput
+                                                mask="+{7}(000)-000-00-00"
                                                 value={editId.phone_number}
-                                                onChange={(e) => setEditId((prev) => ({...prev, phone_number: e.target.value}))}
-                                                required={!editId}
+                                                onChange={(val) => setEditId((prev) => ({...prev, phone_number: val}))}
+                                                className="form-control"
                                             />
+
                                         </div>
 
                                         <div className="text-center mt-4">
