@@ -123,7 +123,10 @@ export const App = () => {
 
         setError(null);
         if (!user)
+        {
+            setError("User не найден, повторите позже");
             return
+        }
 
         const userId = user?.id;
         // const userId = 2;
