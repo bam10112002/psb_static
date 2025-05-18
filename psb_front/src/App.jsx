@@ -92,16 +92,18 @@ export const App = () => {
                 newErrors = "Введите корректное количество счетов.";
             if (!/^\d{10}(\d{2})?$/.test(editId.inn)) newErrors = "ИНН должен содержать 10 или 12 цифр.";
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(editId.email)) newErrors = "Введите корректный Email.";
-            if (!/^\d{10,}$/.test(editId.phone)) newErrors = "Введите корректный номер телефона.";
+            if (editId.phone.length != 16) newErrors = "Введите корректный номер телефона.";
         }
         else
         {
+            console.log(phone)
+            console.log(phone.length)
             if (!companyName.trim()) newErrors = "Введите название компании.";
             if (!/^\d+$/.test(numberOfAccounts) || parseInt(numberOfAccounts) <= 0)
                 newErrors = "Введите корректное количество счетов.";
             if (!/^\d{10}(\d{2})?$/.test(inn)) newErrors = "ИНН должен содержать 10 или 12 цифр.";
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors = "Введите корректный Email.";
-            if (!/^\d{10,}$/.test(phone)) newErrors = "Введите корректный номер телефона.";
+            if (phone.length != 16) newErrors = "Введите корректный номер телефона.";
         }
 
         console.log("end validate")
@@ -285,7 +287,7 @@ export const App = () => {
                                 <label className="form-label mt-2 mb-1">Телефон</label>
 
                                 <IMaskInput
-                                    mask="+{7}(000)-000-00-00"
+                                    mask="+{7}(000)000-00-00"
                                     value={phone}
                                     onAccept={(val) => setPhone(val)}
                                     className="form-control"
