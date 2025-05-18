@@ -92,7 +92,7 @@ export const App = () => {
                 newErrors = "Введите корректное количество счетов.";
             if (!/^\d{10}(\d{2})?$/.test(editId.inn)) newErrors = "ИНН должен содержать 10 или 12 цифр.";
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(editId.email)) newErrors = "Введите корректный Email.";
-            if (editId.phone.length != 16) newErrors = "Введите корректный номер телефона.";
+            if (editId.phone.length != 17) newErrors = "Введите корректный номер телефона.";
         }
         else
         {
@@ -103,7 +103,7 @@ export const App = () => {
                 newErrors = "Введите корректное количество счетов.";
             if (!/^\d{10}(\d{2})?$/.test(inn)) newErrors = "ИНН должен содержать 10 или 12 цифр.";
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors = "Введите корректный Email.";
-            if (phone.length != 16) newErrors = "Введите корректный номер телефона.";
+            if (phone.length != 17) newErrors = "Введите корректный номер телефона.";
         }
 
         console.log("end validate")
@@ -287,9 +287,14 @@ export const App = () => {
                                 <label className="form-label mt-2 mb-1">Телефон</label>
 
                                 <IMaskInput
-                                    mask="+{7}(000)000-00-00"
+                                    mask="+{7}(000)-000-00-00"
                                     value={phone}
-                                    onAccept={(val) => setPhone(val)}
+                                    onAccept={(val) => {
+                                        setPhone(val)
+                                    }
+
+
+                                }
                                     className="form-control"
                                 />
                             </div>
@@ -379,7 +384,7 @@ export const App = () => {
                                             <IMaskInput
                                                 mask="+{7}(000)-000-00-00"
                                                 value={editId.phone_number}
-                                                onChange={(val) => setEditId((prev) => ({...prev, phone_number: val}))}
+                                                onAccept={(val) => setEditId((prev) => ({...prev, phone_number: val}))}
                                                 className="form-control"
                                             />
 
