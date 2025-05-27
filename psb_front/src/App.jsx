@@ -4,6 +4,8 @@ import {Badge, Form} from "react-bootstrap";
 import {Card, ListGroup} from "react-bootstrap";
 import { IMaskInput } from 'react-imask';
 
+import AsyncSelect from 'react-select/async';
+
 const BASE_URL = "https://176-123-166-115.nip.io:444";
 
 export const App = () => {
@@ -13,6 +15,7 @@ export const App = () => {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
 
+    const [_selectedValue, _setSelectedValue] = useState(null);
 
     const [requests, setRequests] = useState([]);
 
@@ -46,6 +49,34 @@ export const App = () => {
                 return "dark";
         }
     };
+
+    useEffect(() => {
+        console.log("try get name")
+        if (inn.length > 4) {
+            console.log("getting name")
+            var url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party";
+            var token = "1150d672674291244d58a2fe5727e4e11de332c7";
+            var query = inn;
+
+            var options = {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": "Token " + token
+                },
+                body: JSON.stringify({query: query})
+            }
+
+            fetch(url, options)
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log("error", error));
+        }
+
+
+    }, [inn]);
 
     useEffect(() => {
         console.log("hello")
@@ -219,7 +250,77 @@ export const App = () => {
         }
     };
 
+    const customStyles = {
+        option: (provided) => ({
+            ...provided,
+            color: '#212529', // Цвет текста как в Bootstrap
+            backgroundColor: 'white', // Фон белый
+            '&:hover': {
+                backgroundColor: '#f8f9fa' // Цвет при наведении
+            }
+        }),
+        menu: (provided) => ({
+            ...provided,
+            zIndex: 9999 // Чтобы выпадающий список был поверх других элементов
+        })
+    };
+
     // if (!user) return <div>Загрузка данных Telegram...</div>;
+
+    const [selectedOrganization, setSelectedOrganization] = useState(null);
+    const loadOptions = async (inputValue) => {
+        try {
+            var url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party";
+            var token = "1150d672674291244d58a2fe5727e4e11de332c7";
+            var query = inputValue;
+
+            var options = {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": "Token " + token
+                },
+                body: JSON.stringify({query: query})
+            }
+
+            return fetch(url, options)
+                .then(response => response.text())
+                .then(result =>
+                {
+                    console.log(result)
+                    console.log(JSON.parse(result)["suggestions"])
+                    return JSON.parse(result)["suggestions"].map(item => ({
+                        value: item.data.inn, // ИНН как уникальный идентификатор
+                        label: item.value, // Название для отображения
+                        fullData: item // Все данные для использования при выборе
+                    }));
+                }
+
+                )
+                .catch(error =>
+                    {
+                        console.log("error", error)
+                        return []; // Возвращаем пустой массив при ошибке
+                    }
+                );
+
+
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return [];
+        }
+    };
+    const _handleChange = (selected) => {
+        console.log('asd')
+        setCompanyName(selected.label)
+        setInn(selected.value)
+        _setSelectedValue(null);
+        console.log('Полные данные организации:', selected.fullData);
+        // Здесь можно передать данные в родительский компонент или state
+    };
 
     return (
         <div className="container-sm  mx-auto " style={{minWidth: "375px"}}>
@@ -251,6 +352,19 @@ export const App = () => {
                                     />
                                 ))}
 
+                                <label className="form-label mt-2 mb-1">Поиск компании</label>
+                                <AsyncSelect
+                                    value={_selectedValue}
+                                    styles={customStyles}
+                                    cacheOptions
+                                    defaultOptions
+                                    loadOptions={loadOptions}
+                                    onChange={_handleChange}
+                                    placeholder="Введите данные организации..."
+                                    noOptionsMessage={() => 'Ничего не найдено'}
+                                    loadingMessage={() => 'Загрузка...'}
+                                />
+
                                 <label className="form-label mt-2 mb-1">Название компании</label>
                                 <input
                                     type="text"
@@ -258,7 +372,26 @@ export const App = () => {
                                     value={companyName}
                                     onChange={(e) => setCompanyName(e.target.value)}
                                     required={!editId}
+                                    readOnly
                                 />
+
+                                <label className="form-label mt-2 mb-1">ИНН</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={inn}
+                                    onChange={(e) => {
+                                        setInn(e.target.value)
+                                    }
+                                    }
+                                    required={!editId}
+                                    readOnly
+
+                                />
+
+
+
+
 
                                 <label className="form-label mt-2 mb-1">Количество счетов</label>
                                 <input
@@ -267,16 +400,10 @@ export const App = () => {
                                     value={numberOfAccounts}
                                     onChange={(e) => setNumberOfAccounts(e.target.value)}
                                     required={!editId}
+
                                 />
 
-                                <label className="form-label mt-2 mb-1">ИНН</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={inn}
-                                    onChange={(e) => setInn(e.target.value)}
-                                    required={!editId}
-                                />
+
 
                                 <label className="form-label mt-2 mb-1">Email</label>
                                 <input
@@ -340,6 +467,8 @@ export const App = () => {
                                                     className="mb-3"
                                                 />
                                             ))}
+
+
 
                                             <label className="form-label mt-2 mb-1">Название компании</label>
                                             <input

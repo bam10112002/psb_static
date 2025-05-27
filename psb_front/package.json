@@ -15,7 +15,8 @@
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.0",
     "react-imask": "^7.6.1",
-    "react-input-mask": "^3.0.0-alpha.2"
+    "react-input-mask": "^3.0.0-alpha.2",
+    "react-select": "^5.10.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
