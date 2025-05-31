@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Badge, Form} from "react-bootstrap";
 import {Card, ListGroup} from "react-bootstrap";
-import { IMaskInput } from 'react-imask';
+import {IMaskInput} from 'react-imask';
 
 import AsyncSelect from 'react-select/async';
 
@@ -124,9 +124,7 @@ export const App = () => {
             if (!/^\d{10}(\d{2})?$/.test(editId.inn)) newErrors = "ИНН должен содержать 10 или 12 цифр.";
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(editId.email)) newErrors = "Введите корректный Email.";
             if (editId.phone_number.length != 17) newErrors = "Введите корректный номер телефона.";
-        }
-        else
-        {
+        } else {
             console.log(phone)
             console.log(phone.length)
             if (!companyName.trim()) newErrors = "Введите название компании.";
@@ -145,16 +143,14 @@ export const App = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!validate())
-        {
+        if (!validate()) {
             console.log("validate false")
             return;
         }
         console.log("validate success")
 
         setError(null);
-        if (!user)
-        {
+        if (!user) {
             setError("User не найден, повторите позже");
             return
         }
@@ -212,12 +208,9 @@ export const App = () => {
         }
 
         await res.json();
-        if (editId)
-        {
+        if (editId) {
             window.alert("Заявка была подредактирована.");
-        }
-        else
-        {
+        } else {
             window.alert("Заявка была создана.");
 
             setCompanyName("");
@@ -287,25 +280,21 @@ export const App = () => {
 
             return fetch(url, options)
                 .then(response => response.text())
-                .then(result =>
-                {
-                    console.log(result)
-                    console.log(JSON.parse(result)["suggestions"])
-                    return JSON.parse(result)["suggestions"].map(item => ({
-                        value: item.data.inn, // ИНН как уникальный идентификатор
-                        label: item.value, // Название для отображения
-                        fullData: item // Все данные для использования при выборе
-                    }));
-                }
-
+                .then(result => {
+                        console.log(result)
+                        console.log(JSON.parse(result)["suggestions"])
+                        return JSON.parse(result)["suggestions"].map(item => ({
+                            value: item.data.inn, // ИНН как уникальный идентификатор
+                            label: item.value, // Название для отображения
+                            fullData: item // Все данные для использования при выборе
+                        }));
+                    }
                 )
-                .catch(error =>
-                    {
+                .catch(error => {
                         console.log("error", error)
                         return []; // Возвращаем пустой массив при ошибке
                     }
                 );
-
 
 
         } catch (error) {
@@ -324,13 +313,37 @@ export const App = () => {
 
     return (
         <div className="container-sm  mx-auto " style={{minWidth: "375px"}}>
+            <div className="d-flex flex-row align-items-center">
+                <h1 className="mb-1 fs-bold">
+                    {active === "left"
+                        ? editId ? "Редактирование заявки" : "Создание заявки"
+                        : "Мои заявки"}
+                </h1>
+                {(active === "left") && (
+                    <button
+                        className="btn btn-primary ms-5"
+                        type="button"
+                        style={{padding: "0 8px", height: "40px"}}
+                        onClick={() => setActive("right")}
+                    >
+                        Мои заявки
+                    </button>
+                )
+                }
+                {(active === "right") &&
+                    (
 
-            <h1 className="mb-1 fs-bold">
-                {active === "left"
-                    ? editId ? "Редактирование заявки" : "Создание заявки"
-                    : "Мои заявки"}
-            </h1>
-
+                        <button
+                            className="btn btn-primary ms-5"
+                            type="button"
+                            style={{padding: "0 8px", height: "40px"}}
+                            onClick={() => setActive("left")}
+                        >
+                            Создание заявки
+                        </button>
+                    )
+                }
+            </div>
             {error && <span className="text-danger d-block mb-2">{error}</span>}
 
             <div className="card mb-0" style={{maxHeight: '85vh', overflowY: 'auto'}}>
@@ -390,9 +403,6 @@ export const App = () => {
                                 />
 
 
-
-
-
                                 <label className="form-label mt-2 mb-1">Количество счетов</label>
                                 <input
                                     type="text"
@@ -402,7 +412,6 @@ export const App = () => {
                                     required={!editId}
 
                                 />
-
 
 
                                 <label className="form-label mt-2 mb-1">Email</label>
@@ -424,7 +433,7 @@ export const App = () => {
                                     }
 
 
-                                }
+                                    }
                                     className="form-control"
                                 />
                             </div>
@@ -433,13 +442,13 @@ export const App = () => {
                                 <button className="btn btn-primary me-4" type="submit">
                                     {editId ? "Сохранить изменения" : "Создать заявку"}
                                 </button>
-                                <button
-                                    className="btn btn-primary ms-2"
-                                    type="button"
-                                    onClick={() => setActive("right")}
-                                >
-                                    Мои заявки
-                                </button>
+                                {/*<button*/}
+                                {/*    className="btn btn-primary ms-2"*/}
+                                {/*    type="button"*/}
+                                {/*    onClick={() => setActive("right")}*/}
+                                {/*>*/}
+                                {/*    Мои заявки*/}
+                                {/*</button>*/}
                             </div>
                         </form>
                     </div>
@@ -462,12 +471,14 @@ export const App = () => {
                                                     value={option.value}
                                                     checked={editId.organizational_form === parseInt(option.value)}
                                                     onChange={() => {
-                                                        setEditId((prev) => ({...prev, organizational_form: parseInt(option.value)}))
+                                                        setEditId((prev) => ({
+                                                            ...prev,
+                                                            organizational_form: parseInt(option.value)
+                                                        }))
                                                     }}
                                                     className="mb-3"
                                                 />
                                             ))}
-
 
 
                                             <label className="form-label mt-2 mb-1">Название компании</label>
@@ -595,16 +606,16 @@ export const App = () => {
 
                                         ))}
 
-                                    <div className="text-center mt-4">
+                                    {/*<div className="text-center mt-4">*/}
 
-                                        <button
-                                            className="btn btn-primary ms-2"
-                                            type="button"
-                                            onClick={() => setActive("left")}
-                                        >
-                                            Создание заявки
-                                        </button>
-                                    </div>
+                                    {/*    <button*/}
+                                    {/*        className="btn btn-primary ms-2"*/}
+                                    {/*        type="button"*/}
+                                    {/*        onClick={() => setActive("left")}*/}
+                                    {/*    >*/}
+                                    {/*        Создание заявки*/}
+                                    {/*    </button>*/}
+                                    {/*</div>*/}
                                 </div>
                             )
 
